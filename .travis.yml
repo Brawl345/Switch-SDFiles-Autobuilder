@@ -33,6 +33,7 @@ before_script:
 - cd $TRAVIS_BUILD_DIR/
 
 script:
+- git clone https://github.com/Thog/nx-dreport nx-dreport
 - "(cd nx-dreport && make)"
 
 before_deploy:
