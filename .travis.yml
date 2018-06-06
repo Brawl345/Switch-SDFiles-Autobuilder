@@ -39,7 +39,7 @@ before_deploy:
 - cd $TRAVIS_BUILD_DIR/
 - mkdir -p "copy-to-sd"
 - commit="$(git rev-parse --short=7 HEAD)"
-- (cd nx-dreport && cp nx-dreport.kip copy-to-sd/nx-dreport.kip1)
+- (cp nx-dreport/nx-dreport.kip copy-to-sd/nx-dreport.kip1)
 - zip -r sdfiles_$commit.zip copy-to-sd
 - git config --global user.email "builds@travis-ci.com"
 - git config --global user.name "Travis CI"
