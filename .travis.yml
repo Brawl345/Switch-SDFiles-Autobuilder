@@ -69,7 +69,7 @@ before_deploy:
 - echo -e "Hekate All-in-One Package\n\nIncluded:">README.txt
 - echo -e "* Hekate CTCaer Mod $HEKATE_VER">>README.txt
 - cp hekate/ipl.bin workdir/hekate_ctcaer_$HEKATE_VER.bin
-- sed -i s/"$DATE"/"$BUILD_TIME UTC"/g "hekate_ipl.ini"
+- sed -i s/"\$DATE"/"$BUILD_TIME UTC"/g "hekate_ipl.ini"
 - cp hekate_ipl.ini workdir/copy-to-sd/
 - echo -e "* Using parts of Atmosphère $ATMOSPHERE_VER (removed Exosphere API check)">>README.txt
 - cp Atmosphere/stratosphere/loader/loader.kip workdir/copy-to-sd/loader.kip1
