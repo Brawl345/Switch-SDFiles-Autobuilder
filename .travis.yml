@@ -35,6 +35,8 @@ before_script:
 - cd $TRAVIS_BUILD_DIR/
 
 script:
+- git clone https://github.com/CTCaer/hekate hekate
+- "(cd hekate && git checkout $(git describe --tags $(git rev-list --tags --max-count=1)) && make)"
 - git clone https://github.com/Thog/nx-dreport nx-dreport
 - "(cd nx-dreport && make)"
 - git clone https://github.com/Adubbz/Gag-Order Gag-Order
@@ -44,12 +46,15 @@ script:
 
 before_deploy:
 - cd $TRAVIS_BUILD_DIR/
-- mkdir -p "copy-to-sd"
-- mkdir -p "copy-to-sd/switch"
-- cp nx-dreport/nx-dreport.kip copy-to-sd/
-- cp Gag-Order/Gag-Order.nro copy-to-sd/switch/
-- cp nx-hbmenu/nx-hbmenu.nro copy-to-sd/hbmenu.nro
-- zip -r sdfiles.zip copy-to-sd
+- mkdir -p "workdir"
+- mkdir -p "workdir/copy-to-sd"
+- mkdir -p "workdir/copy-to-sd/switch"
+- cp nx-dreport/nx-dreport.kip workdir/copy-to-sd/
+- cp Gag-Order/Gag-Order.nro workdir/copy-to-sd/switch/
+- cp nx-hbmenu/nx-hbmenu.nro workdir/copy-to-sd/hbmenu.nro
+- cp hekate/ipl.bin workdir/hekate_ipl_ctcaer_mod.bin
+- cd "workdir"
+- zip -r sdfiles.zip .
 
 deploy:
   provider: releases
