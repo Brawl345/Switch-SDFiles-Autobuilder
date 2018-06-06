@@ -38,10 +38,12 @@ before_script:
 
 script:
 - git clone https://github.com/Atmosphere-NX/Atmosphere Atmosphere
-- cd Atmosphere && ATMOSPHERE_VER=$(git rev-parse --short HEAD) && git apply ../remove_exosphere_dependency.patch
+- cd Atmosphere && ATMOSPHERE_VER=$(git rev-parse --short HEAD)
+- git apply ../remove_exosphere_dependency.patch
 - "(cd stratosphere/libstratosphere && make)"
 - "(cd stratosphere/loader && make)"
 - "(cd stratosphere/sm && make)"
+- cd ..
 - git clone https://github.com/CTCaer/hekate hekate
 - cd hekate && HEKATE_VER=$(git describe --tags $(git rev-list --tags --max-count=1)) && git checkout $HEKATE_VER && make && cd ..
 - git clone https://github.com/Thog/nx-dreport nx-dreport
