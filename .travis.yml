@@ -38,16 +38,15 @@ before_script:
 
 script:
 - git clone https://github.com/CTCaer/hekate hekate
-- cd hekate
-- HEKATE_VER=$(git describe --tags $(git rev-list --tags --max-count=1)) && git checkout $HEKATE_VER && make && cd ..
+- cd hekate && HEKATE_VER=$(git describe --tags $(git rev-list --tags --max-count=1)) && git checkout $HEKATE_VER && make && cd ..
 - git clone https://github.com/Thog/nx-dreport nx-dreport
 - cd nx-dreport && DREPORT_VER=$(git rev-parse --short HEAD) && make && cd ..
 - git clone https://github.com/Adubbz/Gag-Order Gag-Order
-- "(cd Gag-Order && git checkout $(git describe --tags $(git rev-list --tags --max-count=1)) && make)"
+- cd Gag-Order && GAG_VER=$(git describe --tags $(git rev-list --tags --max-count=1)) && git checkout $GAG_VER && make && cd ..
 - git clone https://github.com/StevenMattera/nx-hbmenu nx-hbmenu
-- "(cd nx-hbmenu && make nx)"
+- cd nx-hbmenu && HBMENU_VER=$(git rev-parse --short HEAD) && make nx && cd ..
 - git clone https://github.com/switchbrew/nx-hbloader nx-hbloader
-- "(cd nx-hbloader && make)"
+- cd nx-hbloader && HBLOADER_VER=$(git rev-parse --short HEAD) && make && cd ..
 
 before_deploy:
 - cd $TRAVIS_BUILD_DIR/
@@ -55,11 +54,17 @@ before_deploy:
 - mkdir -p "workdir/copy-to-sd"
 - mkdir -p "workdir/copy-to-sd/switch"
 - mkdir -p "workdir/copy-to-sd/atmosphere/titles/010000000000100D/exefs"
+- echo -e "Hekate All-in-One Package\n\nIncluded:\n">README.txt
+- echo -e "* Hekate CTCaer Mod $HEKATE_VER\n">>README.txt
 - cp hekate/ipl.bin workdir/hekate_ctcaer_$HEKATE_VER.bin
 - cp hekate_ipl.ini workdir/copy-to-sd/
+- echo -e "* NX-dreport $DREPORT_VER\n">>README.txt
 - cp nx-dreport/nx-dreport.kip workdir/copy-to-sd/
+- echo -e "* Gag-Order $GAG_VER\n">>README.txt
 - cp Gag-Order/Gag-Order.nro workdir/copy-to-sd/switch/
+- echo -e "* StevenMattera's Homebrew Menu Fork $HBMENU_VER\n">>README.txt
 - cp nx-hbmenu/nx-hbmenu.nro workdir/copy-to-sd/hbmenu.nro
+- echo -e "* Homebrew Loader $HBLOADER_VER\n">>README.txt
 - cp nx-hbloader/hbl.npdm workdir/copy-to-sd/atmosphere/titles/010000000000100D/exefs/main.npdm
 - cp nx-hbloader/hbl.nso workdir/copy-to-sd/atmosphere/titles/010000000000100D/exefs/main
 - touch workdir/copy-to-sd/atmosphere/titles/010000000000100D/exefs/rtld.stub
