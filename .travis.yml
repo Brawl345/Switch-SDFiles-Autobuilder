@@ -38,7 +38,7 @@ before_script:
 
 script:
 - git clone https://github.com/Atmosphere-NX/Atmosphere Atmosphere
-- cd Atmosphere && ATMOSPHERE_VER=$(git rev-parse --short HEAD) && cd Atmosphere && git apply ../remove_exosphere_dependency.patch
+- cd Atmosphere && ATMOSPHERE_VER=$(git rev-parse --short HEAD) && git apply ../remove_exosphere_dependency.patch
 - "(cd stratosphere/libstratosphere && make)"
 - "(cd stratosphere/loader && make)"
 - "(cd stratosphere/sm && make)"
