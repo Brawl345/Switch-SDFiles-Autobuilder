@@ -37,23 +37,25 @@ script:
 - "(cd nx-dreport && make)"
 - git clone https://github.com/Adubbz/Gag-Order Gag-Order
 - "(cd Gag-Order && git checkout $(git describe --tags $(git rev-list --tags --max-count=1)) && make)"
+- git clone https://github.com/StevenMattera/nx-hbmenu nx-hbmenu
+- "(cd nx-hbmenu && make nx)"
 
 before_deploy:
 - cd $TRAVIS_BUILD_DIR/
 - mkdir -p "copy-to-sd"
 - mkdir -p "copy-to-sd/switch"
-- commit="$(git rev-parse --short=7 HEAD)"
-- (cp nx-dreport/nx-dreport.kip copy-to-sd/)
-- (cp Gag-Order/Gag-Order.nro copy-to-sd/switch/)
-- zip -r sdfiles_$commit.zip copy-to-sd
+- cp nx-dreport/nx-dreport.kip copy-to-sd/
+- cp Gag-Order/Gag-Order.nro copy-to-sd/switch/
+- cp nx-hbmenu/nx-hbmenu.nro copy-to-sd/hbmenu.nro
+- zip -r sdfiles.zip copy-to-sd
 
 deploy:
   provider: releases
   skip_cleanup: true
   api_key:
     secure: kJnxj6VMVDdSH40n/B+6u0VetEi9ThsEoWxWHxCLdl99Rolcb14kMgZRfr35cc9/tvFCij//aHBkFx/JbnpJMHvD0lKDEMc90aJn/RIwveduVcJbJqHXEjWgemnmlkMYAp3Elwz2QYCils3H31LqXYACkvzYj8vkN0scoDIDokPj7BckF7UoLlEkIjgsqG2IbjUradpFOUPAiUPeVgEt1/CihesADwBQlbaJVjAV5g5t8MNvm3IRdpL+aPoO17BGQKbI3/WJ32vNrO04L2x9V2C5zGD+tl3Tux8NRt/jVQTKDWOqOgFcEsG084Z6j+c3RBCv2eOow043fxFEnu2isr38C7jxLCp5zUEGAusvUB/xrJjpr6j2cmtfTmEizxq055/tFBwsLsE6Zio7dTBIiU7j2XX2ZD2SDcDNbwxUq4XTWh7Awd5eK9xnjkx/ez3Q2cYyAKwfotb9GNR0Kesiy21PJmFmzAZ7eJF/TZhPk3mdEBFaDDYn+CR1WTKwl1P967DlCTCiEADQiyVkBxoDujV3sMCzNy7liFbUX5XDJqKFXEPjSW8GlCKU5xgO09ziVyH7J0rT0MSDD9LCt8gbFULZCkxciFpSINnKLojqCkySHKJ08R2XKlR4wP7J4iaOTSon8SD+c2dM76xO1K+5sWXyLViz5QoAevXv3qwAj5w=
-  file: sdfiles_$commit.zip
-  name: SDFiles $(date +'%d.%m.%Y %R')
+  file: sdfiles.zip
+  name: SDFiles $(date +'%d.%m.%Y %R') UTC
   body: SDFiles.zip Update
   on:
     repo: Brawl345/Switch-SDFiles-Autobuilder
