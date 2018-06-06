@@ -38,9 +38,9 @@ before_script:
 
 script:
 - git clone https://github.com/CTCaer/hekate hekate
-- "(cd hekate && HEKATE_VER=$(git describe --tags $(git rev-list --tags --max-count=1)) && git checkout $HEKATE_VER && make)"
+- cd hekate && HEKATE_VER=$(git describe --tags $(git rev-list --tags --max-count=1)) && git checkout $HEKATE_VER && make && cd .."
 - git clone https://github.com/Thog/nx-dreport nx-dreport
-- "(cd nx-dreport && make)"
+- cd nx-dreport && DREPORT_VER=$(git rev-parse --short HEAD) && make && cd .."
 - git clone https://github.com/Adubbz/Gag-Order Gag-Order
 - "(cd Gag-Order && git checkout $(git describe --tags $(git rev-list --tags --max-count=1)) && make)"
 - git clone https://github.com/StevenMattera/nx-hbmenu nx-hbmenu
