@@ -61,7 +61,7 @@ before_deploy:
 - cp nx-hbmenu/nx-hbmenu.nro workdir/copy-to-sd/hbmenu.nro
 - cp nx-hbloader/hbl.npdm workdir/copy-to-sd/atmosphere/titles/010000000000100D/exefs/main.npdm
 - cp nx-hbloader/hbl.nso workdir/copy-to-sd/atmosphere/titles/010000000000100D/exefs/main
-- touch workdir/copy-to-sd/atmosphere/titles/010000000000100D/exefs/main/rtld.stub
+- touch workdir/copy-to-sd/atmosphere/titles/010000000000100D/exefs/rtld.stub
 - cd "workdir"
 - zip -r sdfiles.zip .
 
