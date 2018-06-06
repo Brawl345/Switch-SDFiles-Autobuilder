@@ -53,3 +53,4 @@ deploy:
   body: SDFiles.zip Update
   on:
     repo: Brawl345/Switch-SDFiles-Autobuilder
+    tags: false
