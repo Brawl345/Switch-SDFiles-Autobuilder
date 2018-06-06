@@ -45,16 +45,23 @@ script:
 - "(cd Gag-Order && git checkout $(git describe --tags $(git rev-list --tags --max-count=1)) && make)"
 - git clone https://github.com/StevenMattera/nx-hbmenu nx-hbmenu
 - "(cd nx-hbmenu && make nx)"
+- git clone https://github.com/switchbrew/nx-hbloader nx-hbloader
+- "(cd nx-hbloader && make)"
 
 before_deploy:
 - cd $TRAVIS_BUILD_DIR/
 - mkdir -p "workdir"
 - mkdir -p "workdir/copy-to-sd"
 - mkdir -p "workdir/copy-to-sd/switch"
+- mkdir -p "workdir/copy-to-sd/atmosphere/titles/010000000000100D/exefs"
+- cp hekate/ipl.bin workdir/hekate_ipl_ctcaer_mod.bin
+- cp hekate_ipl.ini workdir/copy-to-sd/
 - cp nx-dreport/nx-dreport.kip workdir/copy-to-sd/
 - cp Gag-Order/Gag-Order.nro workdir/copy-to-sd/switch/
 - cp nx-hbmenu/nx-hbmenu.nro workdir/copy-to-sd/hbmenu.nro
-- cp hekate/ipl.bin workdir/hekate_ipl_ctcaer_mod.bin
+- cp nx-hbloader/hbl.npdm workdir/copy-to-sd/atmosphere/titles/010000000000100D/exefs/main.npdm
+- cp nx-hbloader/hbl.nso workdir/copy-to-sd/atmosphere/titles/010000000000100D/exefs/main
+- touch workdir/copy-to-sd/atmosphere/titles/010000000000100D/exefs/main/rtld.stub
 - cd "workdir"
 - zip -r sdfiles.zip .
 
