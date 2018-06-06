@@ -37,6 +37,11 @@ before_script:
 - cd $TRAVIS_BUILD_DIR/
 
 script:
+- git clone https://github.com/Atmosphere-NX/Atmosphere Atmosphere
+- cd Atmosphere && ATMOSPHERE_VER=$(git rev-parse --short HEAD) && cd Atmosphere && git apply ../remove_exosphere_dependency.patch
+- "(cd stratosphere/libstratosphere && make)"
+- "(cd stratosphere/loader && make)"
+- "(cd stratosphere/sm && make)"
 - git clone https://github.com/CTCaer/hekate hekate
 - cd hekate && HEKATE_VER=$(git describe --tags $(git rev-list --tags --max-count=1)) && git checkout $HEKATE_VER && make && cd ..
 - git clone https://github.com/Thog/nx-dreport nx-dreport
@@ -58,6 +63,9 @@ before_deploy:
 - echo -e "* Hekate CTCaer Mod $HEKATE_VER">>README.txt
 - cp hekate/ipl.bin workdir/hekate_ctcaer_$HEKATE_VER.bin
 - cp hekate_ipl.ini workdir/copy-to-sd/
+- echo -e "* Using parts of Atmosphère $ATMOSPHERE_VER (removed Exosphere API check)">>README.txt
+- cp Atmosphere/stratosphere/loader/loader.kip workdir/copy-to-sd/loader.kip1
+- cp Atmosphere/stratosphere/sm/sm.kip workdir/copy-to-sd/sm.kip1
 - echo -e "* NX-dreport $DREPORT_VER">>README.txt
 - cp nx-dreport/nx-dreport.kip workdir/copy-to-sd/
 - echo -e "* Gag-Order $GAG_VER">>README.txt
