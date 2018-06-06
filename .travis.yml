@@ -55,9 +55,9 @@ script:
 - cd nx-hbmenu && HBMENU_VER=$(git rev-parse --short HEAD) && make nx && cd ..
 - git clone https://github.com/switchbrew/nx-hbloader nx-hbloader
 - cd nx-hbloader && HBLOADER_VER=$(git rev-parse --short HEAD) && make && cd ..
-- $ curl -s https://api.github.com/repos/vgmoose/appstorenx/releases/latest | grep "browser_download_url.*zip" | cut -d : -f 2,3 | tr -d \" | wget -qi -
+- wget $(curl https://api.github.com/repos/vgmoose/appstorenx/releases/latest -s | jq ".assets[0].browser_download_url" -r) -O appstore.zip
 - unzip appstore.zip
-- APPSTORE_VER=$(curl https://api.github.com/repos/$org/$repo/releases/latest -s | jq .tag_name -r)
+- APPSTORE_VER=$(curl https://api.github.com/repos/vgmoose/appstorenx/releases/latest -s | jq ".tag_name" -r)
 
 before_deploy:
 - cd $TRAVIS_BUILD_DIR/
