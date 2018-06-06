@@ -28,6 +28,7 @@ before_install:
 - yes | sudo dkp-pacman -Syu general-tools --needed
 - yes | sudo dkp-pacman -Syu switch-tools --needed
 - yes | sudo dkp-pacman -Syu libnx --needed
+- yes | sudo dkp-pacman -Syu switch-zlib --needed
 
 before_script:
 - cd $TRAVIS_BUILD_DIR/
