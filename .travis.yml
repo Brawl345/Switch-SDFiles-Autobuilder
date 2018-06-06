@@ -38,7 +38,7 @@ before_script:
 
 script:
 - git clone https://github.com/CTCaer/hekate hekate
-- "(cd hekate && git checkout $(git describe --tags $(git rev-list --tags --max-count=1)) && make)"
+- "(cd hekate && HEKATE_VER=$(git describe --tags $(git rev-list --tags --max-count=1)) && git checkout $HEKATE_VER && make)"
 - git clone https://github.com/Thog/nx-dreport nx-dreport
 - "(cd nx-dreport && make)"
 - git clone https://github.com/Adubbz/Gag-Order Gag-Order
@@ -54,7 +54,7 @@ before_deploy:
 - mkdir -p "workdir/copy-to-sd"
 - mkdir -p "workdir/copy-to-sd/switch"
 - mkdir -p "workdir/copy-to-sd/atmosphere/titles/010000000000100D/exefs"
-- cp hekate/ipl.bin workdir/hekate_ipl_ctcaer_mod.bin
+- cp hekate/ipl.bin workdir/hekate_ctcaer_$HEKATE_VER.bin
 - cp hekate_ipl.ini workdir/copy-to-sd/
 - cp nx-dreport/nx-dreport.kip workdir/copy-to-sd/
 - cp Gag-Order/Gag-Order.nro workdir/copy-to-sd/switch/
