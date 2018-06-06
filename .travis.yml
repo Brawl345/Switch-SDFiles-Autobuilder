@@ -18,6 +18,7 @@ addons:
   apt:
     packages:
     - p7zip-full
+    - jq
 
 before_install:
 - mkdir -p "${DEVKITPRO}"
@@ -54,6 +55,9 @@ script:
 - cd nx-hbmenu && HBMENU_VER=$(git rev-parse --short HEAD) && make nx && cd ..
 - git clone https://github.com/switchbrew/nx-hbloader nx-hbloader
 - cd nx-hbloader && HBLOADER_VER=$(git rev-parse --short HEAD) && make && cd ..
+- $ curl -s https://api.github.com/repos/vgmoose/appstorenx/releases/latest | grep "browser_download_url.*zip" | cut -d : -f 2,3 | tr -d \" | wget -qi -
+- unzip appstore.zip
+- APPSTORE_VER=$(curl https://api.github.com/repos/$org/$repo/releases/latest -s | jq .tag_name -r)
 
 before_deploy:
 - cd $TRAVIS_BUILD_DIR/
@@ -78,6 +82,8 @@ before_deploy:
 - cp nx-hbloader/hbl.npdm workdir/copy-to-sd/atmosphere/titles/010000000000100D/exefs/main.npdm
 - cp nx-hbloader/hbl.nso workdir/copy-to-sd/atmosphere/titles/010000000000100D/exefs/main
 - touch workdir/copy-to-sd/atmosphere/titles/010000000000100D/exefs/rtld.stub
+- echo -e "* Appstore NX $APPSTORE_VER">>README.txt
+- cp -R switch workdir/copy-to-sd/
 - cp README.txt workdir/
 - cd "workdir"
 - zip -r sdfiles.zip .
